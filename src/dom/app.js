@@ -70,7 +70,7 @@ function renderOpinions(list) {
 
     list.forEach((opinion) => {
         const el = createOpinionElement(opinion);
-        contenedor.appendChild
+        contenedor.appendChild(el);
     });
 }
 
