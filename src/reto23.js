@@ -90,7 +90,7 @@ function configurarEventoReset(state) {
 
   btnReset.addEventListener('click', () =>  {
     state.likes = 0;
-    render();
+    renderizarEstado(state);
   })
 }
 
@@ -103,12 +103,12 @@ function configurarEventosHover(state) {
 
   hoverzone.addEventListener('mouseenter', () => {
     state.isHovering = true;
-    renderizarEstado();
+    renderizarEstado(state);
   })
 
   hoverzone.addEventListener('mouseleave', () => {
     state.isHovering = false;
-    renderizarEstado();
+    renderizarEstado(state);
   })
 }
 
@@ -120,9 +120,9 @@ function configurarEventosHover(state) {
 function configurarEventoTeclado(state) {
   // tu codigo aqui
   document.addEventListener('keydown', (event) => {
-    if (event.key?.toLocaleLowerCase() === 'l') return;
+    if (event.key?.toLowerCase() !== 'l') return;
     state.likes += 1;
-    render();
+    renderizarEstado(state);
   })
 }
 
@@ -140,25 +140,31 @@ function inicializarAplicacion() {
   configurarEventosHover(estado);
   configurarEventoTeclado(estado);
 
-  render(estado);
+  renderizarEstado(estado);
   return(estado);
 }
+
+console.log(inicializarAplicacion());
 
 // --- Reto 9: Obtener Texto Hover
 // Operador ternario: isHovering ? 'mouse dentro' : 'mouse fuera'
 function obtenerTextoHover(isHovering) {
   // tu codigo aqui
-    const texto = hoverText.textContent = isHovering ? 'mouse dentro' : 'mouse fuera';
-    return texto;
+    const textoHover = isHovering ? 'mouse dentro' : 'mouse fuera';
+    return textoHover;
 }
+
+console.log(obtenerTextoHover(false));
 
 // --- Reto 10: Obtener Titulo Hover
 // Operador ternario: isHovering ? 'hover detectado' : 'pasa el mouse por aquí'
 function obtenerTituloHover(isHovering) {
   // tu codigo aqui
-    const titulo = hoverTitle.textContent = isHovering ? 'hover detectado' : 'pasa el mouse por aquí';
-    return titulo;
+  const tituloHover = isHovering ? 'hover detectado' : 'pasa el mouse por aquí';
+  return tituloHover;
 }
+
+console.log(obtenerTituloHover(true));
 
 module.exports = {
   crearEstadoInicial,
