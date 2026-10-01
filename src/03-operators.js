@@ -69,4 +69,4 @@ console.log(-1/0);
 // NaN
 
 console.log(0/0);
-console.log("hola" * 2);
+console.log("hola" * 2);src/form
