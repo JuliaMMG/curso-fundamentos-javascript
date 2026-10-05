@@ -80,6 +80,9 @@ console.log(notaVacia);
 // SISTEMA DE NOTAS MARKDOWN
 // ============================================
 
+
+const STORAGE_KEY = 'markdown-notes';
+
 // --------------------------------------------
 // UTILIDADES DE TEXTO
 // --------------------------------------------
@@ -370,6 +373,44 @@ function createNotesStore() {
     getNotesCount: getNotesCount,
   };
 }
+
+/** 
+ * Guarda las notas en localStorage
+ * @param {Array} notes - Array de notas a guardar
+*/
+
+function saveToStorage(notes) {
+  if (notes === undefined || notes === null) {
+    console.error('No se pueden guardar notas. Datos inválidos');
+    return
+  }
+  const notesJSON = JSON.stringify(notes);
+  localStorage.setItem(STORAGE_KEY, notesJSON);
+}
+
+/**
+ * Carga las notas desde el LocalStorage
+ * @returns {Array} Array de notas o array vacio si no hay datos
+ */
+
+function loadFromStorage() {
+  const notesJSON = localStorage.getItem(STORAGE_KEY);
+
+  if (notesJSON === null || notesJSON === undefined) {
+    return [];
+  }
+
+  let notes = [];
+  const parsedNotes = JSON.parse(notesJSON);
+
+  if (Array.isArray(parsedNotes)) {
+    note = parsedNotes;
+  }
+
+  return notes;
+}
+
+
 
 // Crear una instancia del store
 console.log('=== CREAR STORE ===');
