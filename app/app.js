@@ -82,6 +82,7 @@ console.log(notaVacia);
 
 
 const STORAGE_KEY = 'markdown-notes';
+let currentNoteId = null;
 
 // --------------------------------------------
 // UTILIDADES DE TEXTO
@@ -373,6 +374,88 @@ function createNotesStore() {
     getNotesCount: getNotesCount,
   };
 }
+
+/**
+ * Muestra el editor y el preview
+ */
+
+function showEditorAndPreview() {
+  const editorSection = document.querySelector('#editor-section');
+  const previewSection = document.querySelector('#preview-section');
+
+  editorSection.style.display = 'flex';
+  previewSection.style.display = 'flex';
+}
+
+/**
+ * Oculta el editor y el preview
+ */
+
+function hideEditorAndPreview() {
+  const editorSection = document.querySelector('#editor-section');
+  const previewSection = document.querySelector('#preview-section');
+
+  editorSection.style.display = 'none';
+  previewSection.style.display = 'none';
+}
+
+/**
+ * Renderiza la lista de notas en el DOM
+ * @param {Array} notes - Array de notas a renderizar
+ */
+
+function renderNoteList(notes) {
+  const noteList = document.querySelector('#note-list');
+
+  if (!noteList) return;
+
+  noteList.replaceChildren();
+
+  if (!Array.isArray(notes) || notes.length === 0) {
+    const emptyMessage = document.createElement('li');
+    emptyMessage.textContent = 'No hay notas para mostrar.';
+    noteList.appendChild(emptyMessage);
+    return;
+  }
+
+  notes.forEach(function (note) {
+    const item = document.createElement('li');
+    const title = document.createElement('h3');
+    const excerpt = document.createElement('p');
+    const date = document.createElement('time');
+
+    title.textContent = note.title || 'Sin título';
+    excerpt.textContent = note.excerpt || '';
+
+    const timestamp = note.updatedAt || note.createdAt;
+    if (timestamp) {
+      date.dateTime = new Date(timestamp).toISOString();
+      date.textContent = new Date(timestamp).toLocaleDateString();
+    }
+
+    item.dataset.noteId = note.id;
+    if (note.id === currentNoteId) {
+      item.classList.add('active');
+    }
+
+    item.append(title, excerpt, date);
+    noteList.appendChild(item);
+  });
+}
+
+/**
+ * Renderizar el editor con el contenido de una nota
+ * @param {Oject|null} nota - Nota a renderizar o null para el editor vacío
+ */
+
+
+
+/**
+ * Renderizar el preview del contenido markdown
+ * @param {string} content - Contenido markdown a renderizar
+ */
+
+
 
 /** 
  * Guarda las notas en localStorage
